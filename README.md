@@ -23,7 +23,7 @@ To download *mean*, *median* and *mean growth* forecasts you use the function **
     
 downloads the mean growth forecasts of nominal GDP.
 
-If you are interested in individual forecasts, you use the function **individualSPF(survey,variable)** where **survey** is the name of the survey, e.g. NGDP, and **variable** is the variable within the survey, e.g. NGDP1. For example, the function call
+If you are interested in individual forecasts, you use the function **individualSPF(survey,variable)** where **survey** is the name of the survey, e.g. NGDP, and **variable** is the variable within the survey, e.g. NGDP1. As *downloadSPF()* *individualSPF()* returns a survey object. For example, the function call
 
     tmp <- individualSPF(survey = "NGDP", variable = "NGDP1")
     
@@ -39,3 +39,12 @@ The following code downloads the CPI-Nowcasts and uses the standard deviation as
 
     tmp <- individualSPF(survey = "CPI", variable = "CPI1")
     dsp <- dispersion(tmp,method = 2)
+
+## The survey object
+
+The functions *downloadSPF()* and *individualSPF()* both return a survey object. This is an S3-object with the following fields:
+
+    survey = Name of the survey
+    type = mean, median, growth, or individual
+    variable = for individual SPFs which variable is contained in the time series, for mean, median, or growth the value will be "all"
+    series = a time series object with the downloaded series.

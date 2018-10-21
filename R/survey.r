@@ -15,8 +15,8 @@ downloadSPF <- function(survey="NGDP", type="mean"){
   else if(type == "growth"){
     dlURL <- paste("https://www.philadelphiafed.org/-/media/research-and-data/real-time-center/survey-of-professional-forecasters/data-files/files/mean_",survey,"_growth.xlsx",sep="")
   }
-  # Download File
 
+  # Download File
   tf = tempfile(fileext=".xlsx")
   download.file(url = dlURL,destfile = tf, mode = "wb")
   fi <- read_excel(tf)

@@ -4,7 +4,9 @@ dispersion.survey <- function(surveyObj, method = 1){
 
   # Check if survey object contains individual forecasts
   if(surveyObj$type != "individual"){
+
     stop("The survey object does not contain individual forecasts")
+
   }
   # Calculate dispersion
 
@@ -13,14 +15,10 @@ dispersion.survey <- function(surveyObj, method = 1){
     # Interquartile range
 
     nr <- nrow(x1$series)
-    disp <- array(0,dim=c(nr))
 
-    for(ii in 1:nr){
 
-      xtmp <- quantile(surveyObj$series[ii,],na.rm=TRUE)[c(2,4)]
-      disp[ii] <- xtmp[2] - xtmp[1]
-
-    }
+    tmp <- t(apply(surveyObj$series,1,quantile,na.rm=TRUE))
+    disp <- tmp[,4] - tmp[,2]
 
     startYear    <- start(surveyObj$series)[1]
     startQuarter <- start(surveyObj$series)[2]
@@ -29,16 +27,7 @@ dispersion.survey <- function(surveyObj, method = 1){
   else if(method == 2){
 
     # Standard deviation
-
-    nr <- nrow(x1$series)
-    disp <- array(0,dim=c(nr))
-
-    for(ii in 1:nr){
-
-      xtmp <- sd(surveyObj$series[ii,],na.rm=TRUE)
-      disp[ii] <- xtmp
-
-    }
+    disp <- apply(surveyObj$series,1,sd,na.rm=TRUE)
 
     startYear    <- start(surveyObj$series)[1]
     startQuarter <- start(surveyObj$series)[2]
@@ -57,13 +46,11 @@ dispersion.survey <- function(surveyObj, method = 1){
     }
 
     # Calculate disperion measure
-    for(ii in 1:(nr-1)){
 
-      xtmp <- quantile(tstmp[ii,],na.rm=TRUE)[c(2,4)]
-      disp[ii] <- xtmp[2] - xtmp[1]
+    tmp <- t(apply(tstmp,1,quantile,na.rm=TRUE))
+    disp <- tmp[,4] - tmp[,2]
 
-    }
-
+    # Calculate starting year and starting quarter of the time series.
     startYear    <- start(surveyObj$series)[1]
     startQuarter <- start(surveyObj$series)[2]
 
@@ -81,7 +68,6 @@ dispersion.survey <- function(surveyObj, method = 1){
   }
 
   # Create time series object
-
 
   tsDisp <- ts(disp, start = c(startYear,startQuarter),frequency = 4)
   return(tsDisp)

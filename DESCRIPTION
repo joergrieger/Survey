@@ -1,11 +1,15 @@
 Package: Survey
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Download data from the Survey of Professional Forecasters 
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: person("Joerg","Rieger",email="joerg.rieger.jr@gmail.com",role=c("aut","cre"))
+Description: This package downloads a wide range of data, i.e. mean, median, mean growth and individual forecasters, from the Survey of professional forecasters. In addition, it can also calculate several measures of cross-sectional dispersion.
+Depends:
+    R (>= 3.3.0)
+Imports:
+    dplyr,
+    readxl
+License: GPL
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 5.0.1

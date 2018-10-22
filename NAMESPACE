@@ -5,7 +5,9 @@ export("individualSPF")
 
 exportClasses("survey")
 
+
 importFrom(dplyr,filter)
+importFrom(dplyr,select)
 importFrom(readxl,read_excel)
 importFrom(tis,growth.rate)
 

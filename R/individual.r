@@ -1,4 +1,4 @@
-#' Download survey data
+#' @title Download individual mean survey data
 #' @param survey The survey you wish to download
 #' @param variable The variable name indicating the forecast horizon, e.g. "NGDP1" or "CPI2".
 #' @return individual SPF returns an object of class "survey".
@@ -7,9 +7,14 @@
 #' \item{survey}{The name of the survey}
 #' \item{type}{Type of the survey, i.e. mean, median, growth, or individual (see individualSPF)}
 #' \item{variable}{Name of the variable indicating the forecast horizon, e.g. "NGDP1", or "NGDP2", downloaded. If "all", all forecast horizons were downloaded}
-#' \item{sseries}{An object of the class ts containing the downloaded series}
+#' \item{series}{An object of the class ts containing the downloaded series}
+#' @details This function downloads an individual survey
 #' @examples
+#' \dontrun{
+#' # download the growth rate forecasts for the consumer price index
 #' tmp <- downloadSPF(survey = "CPI", type = "growth")
+#' }
+#'
 
 individualSPF <- function(survey = "NGDP",variable="NGDP1"){
 
@@ -33,9 +38,14 @@ individualSPF <- function(survey = "NGDP",variable="NGDP1"){
   startQuarter    <- as.numeric(fi[1,2])
   tsIndividualFcs <- ts(individualFcs,start=c(startYear,startQuarter),frequency = 4)
 
+  # Convert into tsibble
+  colnames(tsIndividualFcs) <- paste("Forecaster",c(1:588))
+  tblIndividualFcs <- tsibble::as.tsibble(tsIndividualFcs)
+
 
   # Delete temporary files
   file.remove(tf)
+
 
 
   # Create object of class survey and return it
@@ -83,3 +93,27 @@ unstck <- function(df,variable){
   return(individualForecasts)
 
 }
+
+#' @title download probability forecasts
+#' @param survey The survey data to download
+#' @return Returns an S3 object of the class probsurvey
+#' @export
+probabilitySPF <- function(survey ="prgdp"){
+  survey = tolower(survey)
+
+  # download file
+  dlURL=paste("https://www.philadelphiafed.org/-/media/research-and-data/real-time-center/survey-of-professional-forecasters/data-files/files/individual_",survey,".xlsx",sep="")
+  tf = tempfile(fileext=".xlsx")
+  download.file(url = dlURL,destfile = tf, mode = "wb")
+  fi <- readxl::read_excel(tf,na="#N/A")
+
+  # remove industry
+  fi <- fi[,-c(4)]
+
+  # return(fi)
+  retlist <- structure(list(forecasts = fi, type=survey),class="probsurvey")
+  return(retlist)
+}
+
+
+

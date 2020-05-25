@@ -1,11 +1,5 @@
-#' dispersion calculates cross-sectional measures of forecast dispersion. Currently there are 3 different dispersion measures implemented:
-#'
-#' @title dispersion
-#'
-#' \item{Interquartile Range}{75%-quantile minus 25%-quantile}
-#' \item{standard deviation}{Standard deviation}
-#' \item{Interquartile Range on Q/Q-growth}{75%-quantile minuse 25%-quantile of forecasts of Q/Q-growth}
-#'
+#' @export
+#' @title  Calculating cross-sectional measures of forecast dispersion
 #' @param surveyObj an object of class survey
 #' @param method the dispersion measure
 #' \item{1}{Interquartile Range}
@@ -16,14 +10,14 @@
 #' @examples
 #' tmp <- individualSPF(survey = "CPI", variable = "CPI3")
 #' dsp <- dispersion(tmp,method = 2)
-#'
+#' @details Computes dispersion measures for forecasters.
 #' @rdname dispersion
-#' @export dispersion
 
 
 dispersion <- function(obj,...) UseMethod("dispersion")
 
-
+#' @export
+#' @rdname dispersion
 dispersion.survey <- function(surveyObj, method = 1){
 
   # Check if survey object contains individual forecasts
@@ -38,7 +32,7 @@ dispersion.survey <- function(surveyObj, method = 1){
 
     # Interquartile range
 
-    nr <- nrow(x1$series)
+    nr <- nrow(surveyObj$series)
 
 
     tmp <- t(apply(surveyObj$series,1,quantile,na.rm=TRUE))

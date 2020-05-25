@@ -2,7 +2,7 @@
 % Please edit documentation in R/individual.r
 \name{individualSPF}
 \alias{individualSPF}
-\title{Download survey data}
+\title{Download individual mean survey data}
 \usage{
 individualSPF(survey = "NGDP", variable = "NGDP1")
 }
@@ -18,11 +18,18 @@ An object of class "survey" is a list containing the following components
 \item{survey}{The name of the survey}
 \item{type}{Type of the survey, i.e. mean, median, growth, or individual (see individualSPF)}
 \item{variable}{Name of the variable indicating the forecast horizon, e.g. "NGDP1", or "NGDP2", downloaded. If "all", all forecast horizons were downloaded}
-\item{sseries}{An object of the class ts containing the downloaded series}
+\item{series}{An object of the class ts containing the downloaded series}
 }
 \description{
-Download survey data
+Download individual mean survey data
+}
+\details{
+This function downloads an individual survey
 }
 \examples{
+\dontrun{
+# download the growth rate forecasts for the consumer price index
 tmp <- downloadSPF(survey = "CPI", type = "growth")
+}
+
 }

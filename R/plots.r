@@ -27,7 +27,7 @@ plot_histogram.probsurvey <- function(srvObj,year = NULL,quarter = NULL, id = NU
 
   # Create bins
   filtsrv <- filtsrv[,-c(1:3)]
-  if(srvObj$type="prgdp"){
+  if(srvObj$type=="prgdp"){
 
     binned_survey <- getbins_prgdp(filtsrv,year,quarter)
 

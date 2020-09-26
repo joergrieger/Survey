@@ -2,18 +2,17 @@
 #' @title  Calculating cross-sectional measures of forecast dispersion
 #' @param surveyObj an object of class survey
 #' @param method the dispersion measure
+#' @details Computes dispersion measures for forecasters.
+#' \itemize{
 #' \item{1}{Interquartile Range}
 #' \item{2}{Standard deviation}
 #' \item{3}{Interquartile Range on Q/Q-growth}
-#'
+#' }
 #' @return The function returns an object of class ts
 #' @examples
 #' tmp <- individualSPF(survey = "CPI", variable = "CPI3")
 #' dsp <- dispersion(tmp,method = 2)
-#' @details Computes dispersion measures for forecasters.
 #' @rdname dispersion
-
-
 dispersion <- function(obj,...) UseMethod("dispersion")
 
 #' @export

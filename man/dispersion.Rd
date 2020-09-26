@@ -12,10 +12,7 @@ dispersion(obj, ...)
 \arguments{
 \item{surveyObj}{an object of class survey}
 
-\item{method}{the dispersion measure
-\item{1}{Interquartile Range}
-\item{2}{Standard deviation}
-\item{3}{Interquartile Range on Q/Q-growth}}
+\item{method}{the dispersion measure}
 }
 \value{
 The function returns an object of class ts
@@ -25,6 +22,11 @@ Calculating cross-sectional measures of forecast dispersion
 }
 \details{
 Computes dispersion measures for forecasters.
+\itemize{
+\item{1}{Interquartile Range}
+\item{2}{Standard deviation}
+\item{3}{Interquartile Range on Q/Q-growth}
+}
 }
 \examples{
 tmp <- individualSPF(survey = "CPI", variable = "CPI3")

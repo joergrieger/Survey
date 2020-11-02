@@ -40,7 +40,7 @@ individualSPF <- function(survey = "NGDP",variable="NGDP1"){
 
   # Convert into tsibble
   colnames(tsIndividualFcs) <- paste("Forecaster",c(1:588))
-  tblIndividualFcs <- tsibble::as.tsibble(tsIndividualFcs)
+  tblIndividualFcs <- tsibble::as_tsibble(tsIndividualFcs)
 
 
   # Delete temporary files

@@ -1,0 +1,5 @@
+year = 1968
+filtsrv <- prspf$forecasts %>%
+  dplyr::filter(ID==id) %>%
+  dplyr::filter(YEAR==year) %>%
+  dplyr::filter(QUARTER=quarter)

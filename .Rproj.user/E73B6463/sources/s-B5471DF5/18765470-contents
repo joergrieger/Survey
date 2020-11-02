@@ -1,0 +1,86 @@
+#' @title Fit empirical distribution
+#' @export
+#' @param srvObj A S3-object of the class probsurvey
+#' @param year year of the survey
+#' @param quarter quarter of the survey
+#' @param id forecaster id
+#' @param distr distribution to be fitted. Available are Beta and Normal distribution.
+#' @rdname fitdistr
+#'
+fit_distribution <- function(srvObj,year,quarter,id,distr=c("beta","normal")) UseMethod("fit_distribution")
+
+#' @export
+#' @rdname fitdistr
+fit_distribution.probsurvey <- function(srvObj,year,quarter,id,distr="beta"){
+  # Prepare %>% for use in function
+  `%>%` <- magrittr::`%>%`
+
+  # robustness for distribution check
+  distr <- tolower(distr)
+
+  # Filter out survey data
+  filtsrv <- srvObj$forecasts %>%
+    dplyr::filter(ID == id) %>%
+    dplyr::filter(YEAR == year) %>%
+    dplyr::filter(QUARTER == quarter)
+
+  if(dim(filtsrv)[1] == 0){
+    stop("Invalid inputs")
+  }
+  filtsrv <- filtsrv[,-c(1:3)]
+
+  # get bins
+  binvalue <- getbins_prpgdp(filtsrv,year,quarter)
+  binright <- binvalue$binright
+  nlength  <- length(binright)
+  srvey    <- rev(as.vector(unlist(filtsrv[,c(1:nlength)])))
+  empcdf   <- cumsum(srvey)
+
+  if(distr=="beta"){
+
+    fitted <- optimx::optimx(par=c(1,1),fn=fitbeta,lower=c(0.0,0.0001),method="L-BFGS-B",control=list(trace=0),empcdf=empcdf/100,binright=binright)
+
+  }
+  else if(distr=="normal"){
+
+    fitted <- optimx::optimx(par=c(0,1),fn=fitnorm,lower=c(-Inf,0.00001),method="L-BFGS-B",control=list(trace=0),empcdf=empcdf/100,binright=binright)
+
+  }
+  else{
+
+    stop("Invalid distribution. Must be Beta or Normal distribution.")
+
+  }
+
+  return(fitted)
+
+}
+
+fitbeta <- function(x=c(1,1),empcdf = NULL, binright = NULL){
+
+  nlength <- length(empcdf)
+  fit <- 0
+
+  for(ii in 1:nlength){
+
+    betacdf <- pbeta(binright[ii],x[1],x[2])
+    fit <- fit + (empcdf[ii] - betacdf)^2
+
+  }
+  return(fit)
+}
+
+fitnorm <- function(x=c(1,1),empcdf = NULL, binright = NULL){
+  nlength <- length(empcdf)
+  fit <- 0
+
+  for(ii in 1:nlength){
+
+    normcdf <- pnorm(binright[ii],mean=x[1],sd=x[2])
+    fit <- fit + (empcdf[ii] - normcdf)^2
+
+  }
+  return(fit)
+
+
+}

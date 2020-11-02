@@ -1,0 +1,24 @@
+{
+    "id": "A859CA0A",
+    "path": "~/GitHub/Survey/R/individual.r",
+    "project_path": "R/individual.r",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1565439856544.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "cursorPosition": "100,39",
+        "scrollLine": "0"
+    },
+    "folds": "62|32|94|0|\n",
+    "lastKnownWriteTime": 1590440582,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1590479434979,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,9 +1,9 @@
 {
-    "path" : "~/GitHub/Survey",
-    "sortOrder" : [
+    "path": "~/GitHub/Survey",
+    "sortOrder": [
         {
-            "ascending" : true,
-            "columnIndex" : 2
+            "columnIndex": 2,
+            "ascending": true
         }
     ]
 }

@@ -14,7 +14,7 @@
 #' # download the growth rate forecasts for the consumer price index
 #' tmp <- downloadSPF(survey = "CPI", type = "growth")
 #' }
-#'
+#' @export
 
 individualSPF <- function(survey = "NGDP",variable="NGDP1"){
 
@@ -26,7 +26,7 @@ individualSPF <- function(survey = "NGDP",variable="NGDP1"){
   variable = toupper(variable)
 
   # Download Data
-  dlURL <- paste("https://www.philadelphiafed.org/-/media/research-and-data/real-time-center/survey-of-professional-forecasters/data-files/files/individual_",survey,".xlsx",sep="")
+  dlURL <- paste("https://www.philadelphiafed.org/-/media/frbp/assets/surveys-and-data/survey-of-professional-forecasters/data-files/files/individual_",survey,".xlsx",sep="")
   tf = tempfile(fileext=".xlsx")
   download.file(url = dlURL,destfile = tf, mode = "wb")
   fi <- readxl::read_excel(tf)
@@ -102,7 +102,7 @@ probabilitySPF <- function(survey ="prgdp"){
   survey = tolower(survey)
 
   # download file
-  dlURL=paste("https://www.philadelphiafed.org/-/media/research-and-data/real-time-center/survey-of-professional-forecasters/data-files/files/individual_",survey,".xlsx",sep="")
+  dlURL=paste("https://www.philadelphiafed.org/-/media/frbp/assets/surveys-and-data/survey-of-professional-forecasters/data-files/files/individual_",survey,".xlsx",sep="")
   tf = tempfile(fileext=".xlsx")
   download.file(url = dlURL,destfile = tf, mode = "wb")
   fi <- readxl::read_excel(tf,na="#N/A")

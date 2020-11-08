@@ -31,5 +31,4 @@ This function downloads an individual survey
 # download the growth rate forecasts for the consumer price index
 tmp <- downloadSPF(survey = "CPI", type = "growth")
 }
-
 }

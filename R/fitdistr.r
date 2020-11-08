@@ -1,3 +1,14 @@
+#' @title fit survey to distribution
+#' @param srvObj survey
+#' @param year year of forecast
+#' @param quarter quarter of forecast
+#' @param id forecaster
+#' @param distr probability (cu)
+#' @export
+
+fit_distribution <- function(srvObj,year,quarter,id,distr="Beta",...) UseMethod("fit_distribution")
+
+#' @export
 fit_distribution.probsurvey <- function(srvObj,year,quarter,id,distr="Beta"){
   # Prepare %>% for use in function
   `%>%` <- magrittr::`%>%`

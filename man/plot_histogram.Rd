@@ -7,7 +7,8 @@
 \usage{
 plot_histogram(srvObj, year = NULL, quarter = NULL, ...)
 
-\method{plot_histogram}{probsurvey}(srvObj, year = NULL, quarter = NULL, id = NULL)
+\method{plot_histogram}{probsurvey}(srvObj, year = NULL,
+  quarter = NULL, id = NULL)
 }
 \arguments{
 \item{srvObj}{a S3-object created by probabilitySPF()}

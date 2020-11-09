@@ -33,11 +33,65 @@ fit_distribution.probsurvey <- function(srvObj,year,quarter,id,distr="Beta"){
       # get empirical CDF
       srvey  <- rev(as.vector(unlist(filtsrv[,c(1:15)])))
       empcdf <- cumsum(srvey)
-      #fitted <- optimx::optimx(par=c(1,1),fn=fitbeta,lower=c(0.0,0.0),method="L-BFGS-B",empcdf=empcdf/100,binright=binright)
-      fitted <- optimx::optimx(par=c(0,1),fn=fitnorm,lower=c(-Inf,0.001),method="L-BFGS-B",empcdf=empcdf/100,binright=binright)
+
 
 
   }
+  else if(year == 1973 && quarter > 1 | year == 1974 && quarter < 4){
+    binleft  <- c(-Inf, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+    binright <- c(  -1, -0.1, 0.9, 1.9, 2.9, 3.9, 4.9, 5.9, 6.9, 7.9, 8.9, 9.9, 10.9, 11.9, Inf)
+
+    # get empirical CDF
+    srvey  <- rev(as.vector(unlist(filtsrv[,c(1:15)])))
+    empcdf <- cumsum(srvey)
+  }
+  else if(year == 1974 && quarter == 4 | year > 1974 && year < 1981 | year == 1981 && quarter < 3){
+
+    binleft  <- c(-Inf, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16)
+    binright <- c(3, 3.9, 4.9, 5.9, 6.9, 7.9, 8.9, 9.9, 10.9, 11.9, 12.9, 13.9, 14.9, 15.9, Inf)
+
+    # get empirical CDF
+    srvey  <- rev(as.vector(unlist(filtsrv[,c(1:15)])))
+    empcdf <- cumsum(srvey)
+  }
+  else if(year == 1981 && quarter > 2 | year > 1981 && year < 1985 | year == 1985 && quarter == 1){
+
+    binleft  <- c(-Inf, 4, 6, 8, 10, 12)
+    binright <- c(4, 5.9, 7.9, 9.9, 11.9, Inf)
+
+    # get empirical CDF
+    srvey  <- rev(as.vector(unlist(filtsrv[,c(1:6)])))
+    empcdf <- cumsum(srvey)
+  }
+  else if(year == 1985 && quarter > 1 | year > 1985 && year < 1992){
+    binleft  <- c(-Inf, 2, 4, 6, 8, 10)
+    binright <- c(2, 3.9, 5.9, 7.9, 9.9, Inf)
+
+    # get empirical CDF
+    srvey  <- rev(as.vector(unlist(filtsrv[,c(1:6)])))
+    empcdf <- cumsum(srvey)
+  }
+  else if(year > 1991 && year < 2014){
+
+    binleft  <- c(-Inf, 0, 1, 2, 3, 4, 5, 6, 7, 8)
+    binright <- c(0, 0.9, 1.9, 2.9, 3.9, 4.9, 5.9, 6.9, 7.9, Inf)
+
+    # get empirical CDF
+    srvey  <- rev(as.vector(unlist(filtsrv[,c(1:10)])))
+    empcdf <- cumsum(srvey)
+  }
+  if(distr == "Norm"){
+
+    fitted <- optimx::optimx(par=c(0,1),fn=fitnorm,lower=c(-Inf,0.001),method="L-BFGS-B",empcdf=empcdf/100,binright=binright)
+
+  }
+  else if(distr == "Beta"){
+
+    fitted <- optimx::optimx(par=c(1,1),fn=fitbeta,lower=c(0.001,0.001),method="L-BFGS-B",empcdf=empcdf/100,binright=binright)
+
+  }
+
+
   return(fitted)
 
 }
